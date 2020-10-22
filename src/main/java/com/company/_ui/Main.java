@@ -41,15 +41,9 @@ public class Main {
         int i =  basketServices.createBasket();
         Basket b = basketServices.findBasketById(i);
         basketServices.addOneProduct(i, product1);
-        basketServices.addOneProduct(i, product1);
-        basketServices.printBasket(i);
+
         basketServices.addProductWithNb(i,product2,quantityOfProduct2);
         basketServices.printBasket(i);
-        BasketServices basketServices2 = new BasketServices();
-        int i2 =  basketServices.createBasket();
-
-        BasketServices basketServices3 = new BasketServices();
-        int i3 =  basketServices.createBasket();
 
         /****************************************************************************/
 
