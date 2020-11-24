@@ -1,6 +1,7 @@
 package com.company.application;
 
 import com.company._infra.BasketRepositoryInJSON;
+import com.company._infra.BasketRepositoryInMemory;
 import com.company.domaine.Basket.Basket;
 import com.company.domaine.CommandLine.QuantityOfProduct;
 import com.company.domaine.Product.Product;
@@ -13,9 +14,8 @@ public class BasketServices extends Thread {
     private Basket cache;
     private Commands commands;
 
-
-    public BasketServices() {
-        this.repository = new BasketRepositoryInJSON();
+    public BasketServices(BasketRepositoryInJSON basketRepositoryInJSON) {
+        this.repository =basketRepositoryInJSON;
         this.commands = new Commands();
         Worker w1 = new Worker(this.commands);
         w1.start();
@@ -31,29 +31,20 @@ public class BasketServices extends Thread {
 
     }
 
-    public Basket findBasketById(int id){
-        try {
-            return repository.findById(id);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
     //Manipulation des objects du domain
-    public  void printBasket(int id){
-        findBasketById(id).printBasket();
+    public  void printBasket(int id) throws IOException {
+        this.repository.findById(id).printBasket();
     }
 
-    public void addOneProduct(int id, Product product){
+    public void addOneProduct(int id, Product product) throws IOException {
         if (cache.getIdBasket() != id){
-            cache = findBasketById(id);
+            cache = this.repository.findById(id);;
         }
         Command command = new AddOneProductCommand(product,repository,cache);
         commands.pushCommand(command);
         System.out.println("\nProduct add " + product.getProductName().getName()+ "  "+product.getProductDescription().getDescription() +"\n");
     }
-
+/*
     public void addProductWithNb(int id, Product product, QuantityOfProduct quantityOfProduct){
         if (cache.getIdBasket() != id){
             cache = findBasketById(id);
@@ -104,5 +95,5 @@ public class BasketServices extends Thread {
         }
         return  cache.calculateOfBasketAmount().getAmount();
 
-    }
+    }*/
 }

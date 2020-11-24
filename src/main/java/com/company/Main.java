@@ -1,6 +1,7 @@
-package com.company._ui;
+package com.company;
 import com.company._infra.BasketRepositoryInJSON;
 import com.company._infra.BasketRepositoryInMemory;
+import com.company._ui.CLI;
 import com.company.application.BasketServices;
 import com.company.domaine.Basket.Basket;
 import com.company.domaine.CommandLine.QuantityOfProduct;
