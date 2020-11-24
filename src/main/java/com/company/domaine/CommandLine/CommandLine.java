@@ -3,20 +3,20 @@ import com.company.domaine.Product.Product;
 
 public class CommandLine implements InterfaceCommandLine{
     private Product product;
-    private String productReference;
+    //private String productReference;
     private QuantityOfProduct quantityOfProduct ;
     private CommandLinePrice commandLinePrice;
 
     public CommandLine(Product product, QuantityOfProduct quantityOfProduct) {
         this.product = product;
-        this.productReference = product.getProductReference().getReference();
+       // this.productReference = product.getProductReference().getReference();
         this.quantityOfProduct = quantityOfProduct;
         this.commandLinePrice = new CommandLinePrice(product.getProductPrice().getPrice()*quantityOfProduct.getQuantity());
     }
 
     public CommandLine(Product product) { //CL One Product
         this.product = product;
-        this.productReference = product.getProductReference().getReference();
+       // this.productReference = product.getProductReference().getReference();
         this.quantityOfProduct = new QuantityOfProduct(1);
         this.commandLinePrice = new CommandLinePrice(product.getProductPrice().getPrice()*quantityOfProduct.getQuantity());
     }

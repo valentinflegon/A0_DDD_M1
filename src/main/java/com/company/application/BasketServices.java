@@ -1,24 +1,34 @@
 package com.company.application;
 
 import com.company._infra.BasketRepositoryInJSON;
-import com.company._infra.BasketRepositoryInMemory;
 import com.company.domaine.Basket.Basket;
 import com.company.domaine.CommandLine.QuantityOfProduct;
 import com.company.domaine.Product.Product;
 
 import java.io.IOException;
 
-public class BasketServices {
-    BasketRepositoryInJSON repository = new BasketRepositoryInJSON();
-    //BasketRepositoryInMemory repository = new BasketRepositoryInMemory();
-    Basket cache;
+public class BasketServices extends Thread {
+    private BasketRepositoryInJSON repository;
+    // private BasketRepositoryInMemory repository = new BasketRepositoryInMemory();
+    private Basket cache;
+    private Commands commands;
 
-//Manipulation du cycle de vie objects du domain
+
+    public BasketServices() {
+        this.repository = new BasketRepositoryInJSON();
+        this.commands = new Commands();
+        Worker w1 = new Worker(this.commands);
+        w1.start();
+
+    }
+
+    //Manipulation du cycle de vie objects du domain
     public int createBasket(){
         cache = new Basket();
-        repository.save(cache);
-        System.out.println("Basket create !");
+        Command command = new CreateBasketCommand(this.repository, cache);
+        commands.pushCommand(command);
         return cache.getIdBasket();
+
     }
 
     public Basket findBasketById(int id){
@@ -30,7 +40,7 @@ public class BasketServices {
         return null;
     }
 
-//Manipulation des objects du domain
+    //Manipulation des objects du domain
     public  void printBasket(int id){
         findBasketById(id).printBasket();
     }
@@ -39,8 +49,8 @@ public class BasketServices {
         if (cache.getIdBasket() != id){
             cache = findBasketById(id);
         }
-        cache.addOneProductToBasket(product);
-        repository.save(cache);
+        Command command = new AddOneProductCommand(product,repository,cache);
+        commands.pushCommand(command);
         System.out.println("\nProduct add " + product.getProductName().getName()+ "  "+product.getProductDescription().getDescription() +"\n");
     }
 

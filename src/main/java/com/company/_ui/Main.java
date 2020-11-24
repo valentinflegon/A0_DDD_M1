@@ -37,13 +37,8 @@ public class Main {
 
         /****************************** UI ******************************************/
 
-        BasketServices basketServices = new BasketServices();
-        int i =  basketServices.createBasket();
-        Basket b = basketServices.findBasketById(i);
-        basketServices.addOneProduct(i, product1);
-
-        basketServices.addProductWithNb(i,product2,quantityOfProduct2);
-        basketServices.printBasket(i);
+        CLI cli = new CLI();
+        cli.myBasket();
 
         /****************************************************************************/
 

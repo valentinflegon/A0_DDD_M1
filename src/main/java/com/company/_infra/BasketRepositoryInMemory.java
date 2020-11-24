@@ -11,8 +11,7 @@ public class BasketRepositoryInMemory implements BasketRepository {
 
     @Override
     public void save(Basket basket) {
-        map.put(basket.getIdBasket(),basket);
-    }
+        map.put(basket.getIdBasket(),basket); }
 
     @Override
     public Basket findById(int id) {

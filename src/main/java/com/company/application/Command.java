@@ -1,0 +1,6 @@
+package com.company.application;
+
+public abstract class Command {
+
+    public abstract void execute();
+}
