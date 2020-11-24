@@ -25,4 +25,8 @@ public class Commands {
             return null;
         }
     }
+
+    public int sizeOfCommands(){
+        return this.commands.size();
+    }
 }

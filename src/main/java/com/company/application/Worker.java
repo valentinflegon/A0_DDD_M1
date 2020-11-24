@@ -9,7 +9,11 @@ public class Worker extends Thread{
 
     @Override
     public void run(){
-        while (true){
+        boolean flag = true;
+        while (flag == true){
+            if (this.commands.sizeOfCommands() == 0){
+                flag = false;
+            }
             Command c = this.commands.getCommand();
             if (c != null){
                 c.execute();

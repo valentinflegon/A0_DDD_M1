@@ -1,16 +1,13 @@
 package com.company.application;
-
 import com.company._infra.BasketRepositoryInJSON;
 import com.company._infra.BasketRepositoryInMemory;
 import com.company.domaine.Basket.Basket;
 import com.company.domaine.CommandLine.QuantityOfProduct;
 import com.company.domaine.Product.Product;
-
 import java.io.IOException;
 
 public class BasketServices extends Thread {
     private BasketRepositoryInJSON repository;
-    // private BasketRepositoryInMemory repository = new BasketRepositoryInMemory();
     private Basket cache;
     private Commands commands;
 
@@ -19,19 +16,23 @@ public class BasketServices extends Thread {
         this.commands = new Commands();
         Worker w1 = new Worker(this.commands);
         w1.start();
-
     }
 
-    //Manipulation du cycle de vie objects du domain
+
+/////////////////////////////////////////////////////////////////////////////
+// Manipulation du cycle de vie objects du domain
+////////////////////////////////////////////////////////////////////////////
     public int createBasket(){
         cache = new Basket();
         Command command = new CreateBasketCommand(this.repository, cache);
         commands.pushCommand(command);
         return cache.getIdBasket();
-
     }
 
-    //Manipulation des objects du domain
+
+///////////////////////////////////////////////////////////////////////////
+//Manipulation des objects du domain
+// ////////////////////////////////////////////////////////////////////////
     public  void printBasket(int id) throws IOException {
         this.repository.findById(id).printBasket();
     }
