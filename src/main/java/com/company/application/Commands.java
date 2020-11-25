@@ -14,6 +14,7 @@ public class Commands {
     //AJOUT D'UNE COMMANDE A EXECUTER A LA LISTE
     public synchronized void pushCommand(Command c){
         this.commands.add(c);
+
     }
 
 

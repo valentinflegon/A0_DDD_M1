@@ -33,19 +33,19 @@ public class BasketServices extends Thread {
 ///////////////////////////////////////////////////////////////////////////
 //Manipulation des objects du domain
 // ////////////////////////////////////////////////////////////////////////
-    public  void printBasket(int id) throws IOException {
-        this.repository.findById(id).printBasket();
-    }
-
     public void addOneProduct(int id, Product product) throws IOException {
         if (cache.getIdBasket() != id){
-            cache = this.repository.findById(id);;
+            cache = this.repository.findById(id);
         }
         Command command = new AddOneProductCommand(product,repository,cache);
         commands.pushCommand(command);
         System.out.println("\nProduct add " + product.getProductName().getName()+ "  "+product.getProductDescription().getDescription() +"\n");
     }
+
+
+
 /*
+    public  void printBasket(int id)  {this.repository.findById(id).printBasket();}
     public void addProductWithNb(int id, Product product, QuantityOfProduct quantityOfProduct){
         if (cache.getIdBasket() != id){
             cache = findBasketById(id);

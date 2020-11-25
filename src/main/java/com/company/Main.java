@@ -15,13 +15,9 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-
         /************************ INSTENCE OF PRODUCT AND QUANTITY *********************************/
 
-        ProductName productName1 = new ProductName("Pizza");
-        ProductDescription productDescription1 = new ProductDescription("3 Fromages");
-        ProductPrice productPrice1 = new ProductPrice(10);
-        Product product1 = new Product(productName1,productDescription1, productPrice1);
+
         QuantityOfProduct quantityOfProduct1 = new QuantityOfProduct(9);
 
         ProductName productName2 = new ProductName("Pizza");
@@ -35,6 +31,8 @@ public class Main {
         ProductPrice productPrice3 = new ProductPrice(11);
         Product product3 = new Product(productName3,productDescription3, productPrice3);
         QuantityOfProduct quantityOfProduct3 = new QuantityOfProduct(2);
+
+
 
         /****************************** UI ******************************************/
 

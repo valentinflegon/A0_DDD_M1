@@ -1,5 +1,7 @@
 package com.company.application;
 
+import java.io.IOException;
+
 public class Worker extends Thread{
     private Commands commands;
 
@@ -11,13 +13,14 @@ public class Worker extends Thread{
     public void run(){
         boolean flag = true;
         while (flag == true){
-            if (this.commands.sizeOfCommands() == 0){
-                flag = false;
-            }
             Command c = this.commands.getCommand();
             if (c != null){
+
                 c.execute();
             }
+            /*if (this.commands.sizeOfCommands() == 0){
+                flag = false;
+            }*/
         }
     }
 
