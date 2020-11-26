@@ -2,6 +2,7 @@ package com.company;
 import com.company._infra.BasketRepositoryInJSON;
 import com.company._infra.BasketRepositoryInMemory;
 import com.company._ui.CLI;
+import com.company._ui.JavaFX;
 import com.company.application.BasketServices;
 import com.company.domaine.Basket.Basket;
 import com.company.domaine.CommandLine.QuantityOfProduct;
@@ -9,6 +10,8 @@ import com.company.domaine.Product.*;
 import com.company.domaine.Repository.BasketRepository;
 
 import java.io.IOException;
+
+import static javafx.application.Application.launch;
 
 
 public class Main {
@@ -37,6 +40,7 @@ public class Main {
         /****************************** UI ******************************************/
 
         CLI cli = new CLI();
+
         cli.myBasket();
 
         /****************************************************************************/
