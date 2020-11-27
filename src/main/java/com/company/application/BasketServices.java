@@ -14,18 +14,19 @@ public class BasketServices extends Thread implements ItfBasketServices{
 
     public BasketServices(BasketRepositoryInJSON basketRepositoryInJSON) {
         this.repository =basketRepositoryInJSON;
+        this.cache = new Basket();
         this.commands = new Commands();
         w1 = new Worker(this.commands);
-        //w1.start();
+        w1.start();
 
     }
 
     @Override
     public int createBasket(){
-        cache = new Basket();
+
         this.repository.save(cache);
-        //Command command = new CreateBasketCommand(this.repository, cache);
-       // commands.pushCommand(command);
+        Command command = new CreateBasketCommand(this.repository, cache);
+        commands.pushCommand(command);
         return cache.getIdBasket();
     }
 
@@ -43,17 +44,17 @@ public class BasketServices extends Thread implements ItfBasketServices{
 
     @Override
     public int amount(int id) throws IOException {
-
         if (cache.getIdBasket() != id){
-        cache = this.repository.findById(id);
+            cache = this.repository.findById(id);
         }
-        //cache.printBasket();
         return  cache.calculateOfBasketAmount().getAmount();
 
     }
 
+    @Override
     public  void printBasket(int id) throws IOException {this.repository.findById(id).printBasket();}
 
+    @Override
     public void addProductWithNb(int id, Product product, QuantityOfProduct quantityOfProduct) throws IOException {
         if (cache.getIdBasket() != id){
             cache = this.repository.findById(id);
@@ -64,6 +65,7 @@ public class BasketServices extends Thread implements ItfBasketServices{
         System.out.println("Add " + quantityOfProduct.getQuantity()+ " of " + product.getProductName().getName());
     }
 
+    @Override
     public void removeProduct(int id, Product product) throws IOException {
         if (cache.getIdBasket() != id){
             cache = this.repository.findById(id);
@@ -73,6 +75,7 @@ public class BasketServices extends Thread implements ItfBasketServices{
         System.out.println("\nProduct remove " + product.getProductName().getName()+ "  " + product.getProductDescription().getDescription() + "\n");
     }
 
+    @Override
     public void removeAllSameProduct(int id, Product product) throws IOException {
         if (cache.getIdBasket() != id){
             cache = this.repository.findById(id);
@@ -81,6 +84,7 @@ public class BasketServices extends Thread implements ItfBasketServices{
         repository.save(cache);
     }
 
+    @Override
     public void removeAll(int id) throws IOException {
         if (cache.getIdBasket() != id){
             cache = this.repository.findById(id);
@@ -90,6 +94,7 @@ public class BasketServices extends Thread implements ItfBasketServices{
         System.out.println("\n All product remove of basket\n");
     }
 
+    @Override
     public  void validate(int id) throws IOException {
         //TODO
         if (cache.getIdBasket() != id){
