@@ -6,95 +6,95 @@ import com.company.domaine.CommandLine.QuantityOfProduct;
 import com.company.domaine.Product.Product;
 import java.io.IOException;
 
-public class BasketServices extends Thread {
+public class BasketServices extends Thread implements ItfBasketServices{
     private BasketRepositoryInJSON repository;
     private Basket cache;
     private Commands commands;
+    private  Worker w1;
 
     public BasketServices(BasketRepositoryInJSON basketRepositoryInJSON) {
         this.repository =basketRepositoryInJSON;
         this.commands = new Commands();
-        Worker w1 = new Worker(this.commands);
-        w1.start();
+        w1 = new Worker(this.commands);
+        //w1.start();
+
     }
 
-
-/////////////////////////////////////////////////////////////////////////////
-// Manipulation du cycle de vie objects du domain
-////////////////////////////////////////////////////////////////////////////
+    @Override
     public int createBasket(){
         cache = new Basket();
-        Command command = new CreateBasketCommand(this.repository, cache);
-        commands.pushCommand(command);
+        this.repository.save(cache);
+        //Command command = new CreateBasketCommand(this.repository, cache);
+       // commands.pushCommand(command);
         return cache.getIdBasket();
     }
 
-
-///////////////////////////////////////////////////////////////////////////
-//Manipulation des objects du domain
-// ////////////////////////////////////////////////////////////////////////
+    @Override
     public void addOneProduct(int id, Product product) throws IOException {
         if (cache.getIdBasket() != id){
             cache = this.repository.findById(id);
         }
-        Command command = new AddOneProductCommand(product,repository,cache);
-        commands.pushCommand(command);
+       // Command command = new AddOneProductCommand(product,repository,cache);
+       // commands.pushCommand(command);
+        this.cache.addOneProductToBasket(product);
+       repository.save(cache);
         System.out.println("\nProduct add " + product.getProductName().getName()+ "  "+product.getProductDescription().getDescription() +"\n");
     }
 
+    @Override
+    public int amount(int id) throws IOException {
 
-
-/*
-    public  void printBasket(int id)  {this.repository.findById(id).printBasket();}
-    public void addProductWithNb(int id, Product product, QuantityOfProduct quantityOfProduct){
         if (cache.getIdBasket() != id){
-            cache = findBasketById(id);
+        cache = this.repository.findById(id);
+        }
+        //cache.printBasket();
+        return  cache.calculateOfBasketAmount().getAmount();
+
+    }
+
+    public  void printBasket(int id) throws IOException {this.repository.findById(id).printBasket();}
+
+    public void addProductWithNb(int id, Product product, QuantityOfProduct quantityOfProduct) throws IOException {
+        if (cache.getIdBasket() != id){
+            cache = this.repository.findById(id);
+
         }
         cache.addProductToBasket(product,quantityOfProduct);
         repository.save(cache);
         System.out.println("Add " + quantityOfProduct.getQuantity()+ " of " + product.getProductName().getName());
     }
 
-    public void removeProduct(int id, Product product){
+    public void removeProduct(int id, Product product) throws IOException {
         if (cache.getIdBasket() != id){
-            cache = findBasketById(id);
+            cache = this.repository.findById(id);
         }
         cache.removeProductToBasket(product,new QuantityOfProduct(1));
         repository.save(cache);
         System.out.println("\nProduct remove " + product.getProductName().getName()+ "  " + product.getProductDescription().getDescription() + "\n");
     }
 
-    public void removeAllSameProduct(int id, Product product){
+    public void removeAllSameProduct(int id, Product product) throws IOException {
         if (cache.getIdBasket() != id){
-            cache = findBasketById(id);
+            cache = this.repository.findById(id);
         }
         cache.removeAllSameProductFromBasket(product);
         repository.save(cache);
     }
 
-    public void removeAll(int id){
+    public void removeAll(int id) throws IOException {
         if (cache.getIdBasket() != id){
-            cache = findBasketById(id);
+            cache = this.repository.findById(id);
         }
         cache.removeAll();
         repository.save(cache);
         System.out.println("\n All product remove of basket\n");
     }
 
-    public  void validate(int id){
+    public  void validate(int id) throws IOException {
         //TODO
         if (cache.getIdBasket() != id){
-            cache = findBasketById(id);
-        }
+            cache = this.repository.findById(id);        }
         cache.validateBasket();
 
     }
-
-    public  int amount(int id){
-        if (cache.getIdBasket() != id){
-            cache = findBasketById(id);
-        }
-        return  cache.calculateOfBasketAmount().getAmount();
-
-    }*/
 }

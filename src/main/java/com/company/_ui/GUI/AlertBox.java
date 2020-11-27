@@ -1,4 +1,4 @@
-package com.company._ui;
+package com.company._ui.GUI;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -18,7 +18,7 @@ public class AlertBox {
     //    window.setTitle(title);
         window.setMinWidth(250);
 
-        Label label = new Label("Etes vous sur de vouloir annuler votre paier ?");
+        Label label = new Label("Etes vous sur de vouloir annuler votre panier ?");
         Button nonButton = new Button("Non");
         nonButton.setOnAction(e -> {
             answer = false;

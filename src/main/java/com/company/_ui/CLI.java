@@ -19,20 +19,26 @@ public class CLI {
     ProductPrice productPrice1 = new ProductPrice(10);
     Product product1 = new Product(productName1,productDescription1, productPrice1);
 
+    public static void main(String[] args) throws IOException, InterruptedException {
+
+        CLI cli = new CLI();
+        cli.myBasket();
+    }
 
     public CLI() {
         this.basketServices = new BasketServices(new BasketRepositoryInJSON());
     }
 
-    public void myBasket() throws IOException {
+    public void myBasket() throws IOException, InterruptedException {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Press (1)");//vieuw
+        System.out.println("Press (1) pour creer un panier ");//vieuw
         String answere = sc.nextLine();
         int oneOrTwo = Integer.parseInt(answere);
-        if (oneOrTwo == 1 ){
+        if (oneOrTwo == 1 ) {
             id = this.basketServices.createBasket();
             this.basketServices.addOneProduct(id,product1);
-
+            System.out.println(this.basketServices.amount(id));
+            Thread.sleep(1000);
         }
     }
 
