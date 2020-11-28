@@ -36,9 +36,13 @@ public class CLI {
         int oneOrTwo = Integer.parseInt(answere);
         if (oneOrTwo == 1 ) {
             id = this.basketServices.createBasket();
-           // Thread.sleep(4000);
             this.basketServices.addOneProduct(id,product1);
-            System.out.println(this.basketServices.amount(id));
+            Thread.sleep(1000);
+
+            this.basketServices.printBasket(id);
+            this.basketServices.removeProduct(id,product1);
+            Thread.sleep(1000);
+            this.basketServices.printBasket(id);
         }
     }
 

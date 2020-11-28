@@ -1,5 +1,6 @@
-package com.company.application;
+package com.company.application.AllCommand;
 
+import com.company.application.Command;
 import com.company.domaine.Basket.Basket;
 import com.company.domaine.Product.Product;
 import com.company.domaine.Repository.BasketRepository;

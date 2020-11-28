@@ -16,11 +16,7 @@ public interface ItfBasketServices {
 
     public  void printBasket(int id) throws IOException;
 
-    public void addProductWithNb(int id, Product product, QuantityOfProduct quantityOfProduct) throws IOException;
-
     public void removeProduct(int id, Product product) throws IOException;
-
-    public void removeAllSameProduct(int id, Product product) throws IOException ;
 
     public void removeAll(int id) throws IOException ;
 

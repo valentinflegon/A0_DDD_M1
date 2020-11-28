@@ -1,6 +1,8 @@
 package com.company.application;
 import com.company._infra.BasketRepositoryInJSON;
-import com.company._infra.BasketRepositoryInMemory;
+import com.company.application.AllCommand.AddOneProductCommand;
+import com.company.application.AllCommand.CreateBasketCommand;
+import com.company.application.AllCommand.RemoveProductCommand;
 import com.company.domaine.Basket.Basket;
 import com.company.domaine.CommandLine.QuantityOfProduct;
 import com.company.domaine.Product.Product;
@@ -23,7 +25,6 @@ public class BasketServices extends Thread implements ItfBasketServices{
 
     @Override
     public int createBasket(){
-
         this.repository.save(cache);
         Command command = new CreateBasketCommand(this.repository, cache);
         commands.pushCommand(command);
@@ -35,10 +36,8 @@ public class BasketServices extends Thread implements ItfBasketServices{
         if (cache.getIdBasket() != id){
             cache = this.repository.findById(id);
         }
-       // Command command = new AddOneProductCommand(product,repository,cache);
-       // commands.pushCommand(command);
-        this.cache.addOneProductToBasket(product);
-       repository.save(cache);
+        Command command = new AddOneProductCommand(product,repository,cache);
+        commands.pushCommand(command);
         System.out.println("\nProduct add " + product.getProductName().getName()+ "  "+product.getProductDescription().getDescription() +"\n");
     }
 
@@ -48,21 +47,15 @@ public class BasketServices extends Thread implements ItfBasketServices{
             cache = this.repository.findById(id);
         }
         return  cache.calculateOfBasketAmount().getAmount();
-
     }
 
-    @Override
-    public  void printBasket(int id) throws IOException {this.repository.findById(id).printBasket();}
 
     @Override
-    public void addProductWithNb(int id, Product product, QuantityOfProduct quantityOfProduct) throws IOException {
+    public  void printBasket(int id) throws IOException {
         if (cache.getIdBasket() != id){
             cache = this.repository.findById(id);
-
         }
-        cache.addProductToBasket(product,quantityOfProduct);
-        repository.save(cache);
-        System.out.println("Add " + quantityOfProduct.getQuantity()+ " of " + product.getProductName().getName());
+        cache.printBasket();
     }
 
     @Override
@@ -70,18 +63,9 @@ public class BasketServices extends Thread implements ItfBasketServices{
         if (cache.getIdBasket() != id){
             cache = this.repository.findById(id);
         }
-        cache.removeProductToBasket(product,new QuantityOfProduct(1));
-        repository.save(cache);
+        Command command = new RemoveProductCommand(product,repository,cache);
+        commands.pushCommand(command);
         System.out.println("\nProduct remove " + product.getProductName().getName()+ "  " + product.getProductDescription().getDescription() + "\n");
-    }
-
-    @Override
-    public void removeAllSameProduct(int id, Product product) throws IOException {
-        if (cache.getIdBasket() != id){
-            cache = this.repository.findById(id);
-        }
-        cache.removeAllSameProductFromBasket(product);
-        repository.save(cache);
     }
 
     @Override
