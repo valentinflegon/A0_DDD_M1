@@ -44,7 +44,7 @@ public class JavaFX  extends Application {
 
     @Override
     public void start(Stage stage) throws Exception{
-
+        Label label2 = new Label("Votre panier est vide pour le moment");
        window = stage;
        window.setOnCloseRequest(e -> {
            e.consume();
@@ -89,6 +89,8 @@ public class JavaFX  extends Application {
                 System.out.println("ajout de pizza");
                 this.basketServices.printBasket(id);
                 amout = this.basketServices.amount(id);
+                label2.setText("Total : "+amout + "EUR");
+
 
             } catch (IOException e1) {
                 e1.printStackTrace();
@@ -102,7 +104,7 @@ public class JavaFX  extends Application {
                 System.out.println("Enlever une pizza");
                 this.basketServices.printBasket(id);
                 amout = this.basketServices.amount(id);
-
+                label2.setText("Total : "+amout + "EUR");
 
             } catch (IOException e1) {
                 e1.printStackTrace();
@@ -115,9 +117,8 @@ public class JavaFX  extends Application {
                 System.out.println("Payer tes pizzas voleur ");
         });
 
-        Label label1 = new Label("Numéro de commande : " + id  + "\n" + amout);
         VBox layout2 = new VBox(20);
-        layout2.getChildren().addAll(label1,button3,button4,button5,button2);
+        layout2.getChildren().addAll(label2,button3,button4,button5,button2);
         layout2.setAlignment(Pos.CENTER);
 
 
