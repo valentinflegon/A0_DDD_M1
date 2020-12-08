@@ -37,12 +37,11 @@ public class CLI {
         if (oneOrTwo == 1 ) {
             id = this.basketServices.createBasket();
             this.basketServices.addOneProduct(id,product1);
+            this.basketServices.addOneProduct(id,product1);
             Thread.sleep(1000);
 
             this.basketServices.printBasket(id);
-            this.basketServices.removeProduct(id,product1);
-            Thread.sleep(1000);
-            this.basketServices.printBasket(id);
+
         }
     }
 

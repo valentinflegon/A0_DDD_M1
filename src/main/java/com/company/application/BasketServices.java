@@ -6,15 +6,17 @@ import com.company.application.AllCommand.RemoveProductCommand;
 import com.company.domaine.Basket.Basket;
 import com.company.domaine.CommandLine.QuantityOfProduct;
 import com.company.domaine.Product.Product;
+import com.company.domaine.Repository.BasketRepository;
+
 import java.io.IOException;
 
 public class BasketServices extends Thread implements ItfBasketServices{
-    private BasketRepositoryInJSON repository;
+    private BasketRepository repository;
     private Basket cache;
     private Commands commands;
     private  Worker w1;
 
-    public BasketServices(BasketRepositoryInJSON basketRepositoryInJSON) {
+    public BasketServices(BasketRepository basketRepositoryInJSON) {
         this.repository =basketRepositoryInJSON;
         this.cache = new Basket();
         this.commands = new Commands();
